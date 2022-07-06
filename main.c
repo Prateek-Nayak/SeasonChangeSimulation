@@ -62,7 +62,6 @@ GLfloat schoolDoorRot = 0;
 void anim();
 void dayDisp(int a);
 void morning();
-void streetLight();
 void sun();
 void Watch();
 void shop();
@@ -73,7 +72,7 @@ void init();
 void Origin();
 void building();
 void commonBuiliding();
-void commonBuilidingLarge();
+//void commonBuilidingLarge();
 void commercialBuilding();
 void demoBuilding();
 void window();
@@ -81,8 +80,6 @@ void windowBack();
 void setColor(int r, int g, int b);
 void getColor();
 void school();
-void schoolBoy();
-void people();
 void Clouds(float xdiff, float ydiff);
 void plant(float xdiff);
 void renderBitmapString(float x, float y, void *font, const char *string);
@@ -90,11 +87,9 @@ void car();
 void carAnim(int val);
 void cloudAnim(int val);
 void clockAnim(int val);
-void legAnim(int val);
 void sunAnim(int val);
 void doorAnim(int val);
 void peopleAnim(int val);
-
 void myinit()
 {
     glPointSize(1.0);
@@ -142,19 +137,16 @@ void carAnim(int val)
         if (!midNight)
             carPosX1 = -3.8;
     }
-
     if (carPosX2 < -2)
     {
         if (!midNight)
             carPosX2 = 3.8;
     }
-
     if (car2PosX1 > 2)
     {
         if (!midNight)
             car2PosX1 = -3.8;
     }
-
     if (car2PosX2 < -2)
     {
         if (!midNight)
@@ -168,30 +160,6 @@ void carAnim(int val)
     glutPostRedisplay();
     glutTimerFunc(1000, carAnim, 0);
 }
-// Function for leg animation of people
-void legAnim(int val)
-{
-    if (leftL > 0 && rightL < 0)
-    {
-        rightL += 1;
-        leftL -= 1;
-    }
-    else if (leftL <= 0 && rightL >= 0 && leftL > -20 && rightL < 20)
-    {
-        rightL += 1;
-        leftL -= 1;
-    }
-    else if (leftL == -20 && rightL == 20)
-    {
-        rightL = -20;
-        leftL = 20;
-    }
-    leftL += .1;
-    rightL -= .1;
-    glutPostRedisplay();
-    glutTimerFunc(100, legAnim, 0);
-}
-
 // Function for cloud animation
 void cloudAnim(int val)
 {
@@ -202,56 +170,6 @@ void cloudAnim(int val)
     cloudScalVal += .00005;
     glutPostRedisplay();
     glutTimerFunc(100, cloudAnim, 0);
-}
-// Function to draw streetlight
-void streetLight()
-{
-    glColor3f(0, 0, 0);
-
-    glLineWidth(6);
-    glBegin(GL_LINES);
-    glVertex2f(0, -.4);
-    glVertex2f(0, -.7);
-    glEnd();
-    glLineWidth(7);
-
-    glBegin(GL_LINE_STRIP);
-    glPointSize(7);
-    for (int i = 0; i < 361; i++)
-    {
-        glBegin(GL_POINTS);
-        glVertex2f(.03 + .03 * cos(i * 3.14159265358979 / 360.0), -.4 + .03 * sin(i * 3.14159265358979 / 360.0));
-        glEnd();
-    }
-    glEnd();
-
-    glBegin(GL_LINE_STRIP);
-    for (int i = 0; i < 361; i++)
-    {
-        glBegin(GL_POINTS);
-        glVertex2f(-.03 + .03 * cos(i * 3.14159265358979 / 360.0), -.4 + .03 * sin(i * 3.14159265358979 / 360.0));
-        glEnd();
-    }
-    glEnd();
-
-    glColor3f(.8, .8, .8);
-    FilledCircle(.06, -.41, .03, 100);
-    FilledCircle(-.06, -.41, .03, 100);
-}
-// Function to draw plants which are in autumn season
-void planta(float xdiff)
-{
-    glColor3ub(255, 140, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(.105 + xdiff, -.44);
-    glVertex2f(.1 + xdiff, -.44);
-    glVertex2f(.095 + xdiff, -.56);
-    glVertex2f(.11 + xdiff, -.56);
-    glEnd();
-    glColor3ub(255, 140, 0);
-    FilledCircle(.105 + xdiff, -.43, .04, 100);
-    FilledCircle(.08 + xdiff, -.46, .04, 100);
-    FilledCircle(.12 + xdiff, -.46, .04, 100);
 }
 // Function to draw clouds which are in autumn season
 void Cloudsa(float xdiff, float ydiff)
@@ -269,21 +187,6 @@ void Cloudsa(float xdiff, float ydiff)
     FilledCircle(-0.05 * 3 + xdiff, .04 * 2 + ydiff, .07, 360);
 }
 
-// Function to draw plants
-void plant(float xdiff)
-{
-    glColor3ub(107, 68, 25);
-    glBegin(GL_POLYGON);
-    glVertex2f(.105 + xdiff, -.44);
-    glVertex2f(.1 + xdiff, -.44);
-    glVertex2f(.095 + xdiff, -.56);
-    glVertex2f(.11 + xdiff, -.56);
-    glEnd();
-    glColor3ub(117, 183, 25);
-    FilledCircle(.105 + xdiff, -.43, .04, 100);
-    FilledCircle(.08 + xdiff, -.46, .04, 100);
-    FilledCircle(.12 + xdiff, -.46, .04, 100);
-}
 // Function to draw clouds
 void Clouds(float xdiff, float ydiff)
 {
@@ -327,7 +230,6 @@ void renderBitmapString(float x, float y, void *font, const char *string)
         glutBitmapCharacter(font, *c);
     }
 }
-
 void setColor(int r, int g, int b)
 {
     gLobal_R = r;
@@ -392,199 +294,7 @@ void windowBack()
     glVertex2f(-1.61 - .02, -.35);
     glEnd();
 }
-// Function to draw schoolboy
-void schoolBoy()
-{
 
-    glColor3ub(253, 231, 173);
-    FilledCircle(0, .5, .1, 100);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.12, .48);
-    glVertex2f(.08, .55);
-    glVertex2f(.0, .48);
-    glEnd();
-    glColor3f(0, 0, 0);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.05, .538);
-    glVertex2f(.07, .55);
-    glVertex2f(.09, .545);
-    glEnd();
-
-    FilledCircle(.0825, .53, .01, 100);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.0455, .45);
-    glVertex2f(.075, .438);
-    glVertex2f(.085, .445);
-    glEnd();
-    glColor3ub(253, 231, 173);
-
-    glBegin(GL_QUADS);
-    glVertex2f(-.06, .43);
-    glVertex2f(-.06, .35);
-    glVertex2f(.03, .35);
-    glVertex2f(.03, .43);
-    glEnd();
-
-    // leg
-    glPushMatrix();
-    glRotatef(leftL, 0, 0, 1);
-    glColor3f(0, 0, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(-.05, -.5);
-    glVertex2f(.1, -.5);
-    glVertex2f(.09, -.45);
-    glVertex2f(.05, -.45);
-    glVertex2f(.08, 0);
-    glVertex2f(-.08, 0);
-    glEnd();
-    glPopMatrix();
-
-    glRotatef(0, 0, 0, 1);
-    glPushMatrix();
-    glRotatef(rightL, 0, 0, 1);
-    glColor3f(0, 0, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(-.05, -.5);
-    glVertex2f(.1, -.5);
-    glVertex2f(.09, -.45);
-    glVertex2f(.05, -.45);
-    glVertex2f(.08, 0);
-    glVertex2f(-.08, 0);
-    glEnd();
-
-    glPopMatrix();
-
-    glRotatef(0, 0, 0, 1);
-    // body
-    glColor3f(1, 1, 1);
-    glBegin(GL_POLYGON);
-    glVertex2f(-.065, .37);
-    glVertex2f(-.1, .3);
-    glVertex2f(-.08, 0);
-    glVertex2f(.08, 0);
-    glVertex2f(.083, .28);
-    glVertex2f(.04, .35);
-    glEnd();
-    // bag
-    glColor3f(0, 0, 0);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(-.1, .3);
-    glVertex2f(-.15, .08);
-    glVertex2f(-.07, .02);
-    glEnd();
-
-    glColor3ub(253, 231, 173);
-    glBegin(GL_POLYGON);
-
-    glVertex2f(-.02, .14);
-    glVertex2f(.04, .3);
-    glVertex2f(-.07, .3);
-    glVertex2f(-.1, .1);
-    glVertex2f(.0, .05);
-    glVertex2f(.02, .11);
-    glEnd();
-    glColor3f(1, 1, 1);
-    glBegin(GL_POLYGON);
-    glVertex2f(.04, .3);
-    glVertex2f(-.07, .3);
-    glVertex2f(-.084, .22);
-    glVertex2f(.01, .2);
-
-    glEnd();
-}
-// Function to draw people
-void people()
-{
-    glColor3ub(253, 231, 173);
-    FilledCircle(0, .5, .1, 100);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.12, .48);
-    glVertex2f(.08, .55);
-    glVertex2f(.0, .48);
-    glEnd();
-    glColor3f(0, 0, 0);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.05, .538);
-    glVertex2f(.07, .55);
-    glVertex2f(.09, .545);
-    glEnd();
-
-    FilledCircle(.0825, .53, .01, 100);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(.0455, .45);
-    glVertex2f(.075, .438);
-    glVertex2f(.085, .445);
-    glEnd();
-    glColor3ub(253, 231, 173);
-
-    glBegin(GL_QUADS);
-    glVertex2f(-.06, .43);
-    glVertex2f(-.06, .35);
-    glVertex2f(.03, .35);
-    glVertex2f(.03, .43);
-    glEnd();
-
-    // leg
-    glPushMatrix();
-    glRotatef(leftL, 0, 0, 1);
-    glColor3f(0, 0, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(-.05, -.5);
-    glVertex2f(.1, -.5);
-    glVertex2f(.09, -.45);
-    glVertex2f(.05, -.45);
-    glVertex2f(.08, 0);
-    glVertex2f(-.08, 0);
-    glEnd();
-    glPopMatrix();
-
-    glRotatef(0, 0, 0, 1);
-    glPushMatrix();
-    glRotatef(rightL, 0, 0, 1);
-    glColor3f(0, 0, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(-.05, -.5);
-    glVertex2f(.1, -.5);
-    glVertex2f(.09, -.45);
-    glVertex2f(.05, -.45);
-    glVertex2f(.08, 0);
-    glVertex2f(-.08, 0);
-    glEnd();
-
-    glPopMatrix();
-
-    glRotatef(0, 0, 0, 1);
-
-    // body
-    getColor();
-    glBegin(GL_POLYGON);
-    glVertex2f(-.065, .37);
-    glVertex2f(-.1, .3);
-    glVertex2f(-.08, 0);
-    glVertex2f(.08, 0);
-    glVertex2f(.083, .28);
-    glVertex2f(.04, .35);
-    glEnd();
-
-    glColor3ub(253, 231, 173);
-    glBegin(GL_POLYGON);
-
-    glVertex2f(-.02, .14);
-    glVertex2f(.04, .3);
-    glVertex2f(-.07, .3);
-    glVertex2f(-.1, .1);
-    glVertex2f(.0, .05);
-    glVertex2f(.02, .11);
-    glEnd();
-    getColor();
-    glBegin(GL_POLYGON);
-    glVertex2f(.04, .3);
-    glVertex2f(-.07, .3);
-    glVertex2f(-.084, .22);
-    glVertex2f(.01, .2);
-
-    glEnd();
-}
 // Function to draw window
 void window()
 {
@@ -602,7 +312,6 @@ void window()
 // Function to draw clock
 void Watch()
 {
-
     glColor3f(1, 1, 1);
     FilledCircle(0, 0, .5, 360);
     glColor3ub(134, 66, 33);
@@ -677,112 +386,6 @@ void Watch()
     glRotatef(0, 0, 0, 1);
     glPopMatrix();
     FilledCircle(0, 0, .01, 100);
-}
-// Function to draw building
-void demoBuilding()
-{
-    glBegin(GL_POLYGON);
-    glVertex2f(-1.79, 0 + .3);
-    glVertex2f(-1.79, -.62);
-    glVertex2f(-1.4, -.62);
-    glVertex2f(-1.4, 0 + .3);
-    glVertex2f(-1.595, .05 + .3);
-    glEnd();
-
-    glColor3f(1, 1, 1);
-    glBegin(GL_POLYGON);
-    glVertex2f(-1.595, .05 + .3);
-    glVertex2f(-1.39, -.01 + .3);
-    glVertex2f(-1.39, 0 + .3);
-    glVertex2f(-1.595, .06 + .3);
-    glVertex2f(-1.80, 0 + .3);
-    glVertex2f(-1.80, -.010 + .3);
-    glEnd();
-
-    FilledCircle(-1.595, -.0 + .3, .03, 100);
-    glColor3ub(48, 87, 102);
-    FilledCircle(-1.595, -.0 + .3, .025, 100);
-
-    glColor3ub(87, 62, 58);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.56, -.48);
-    glVertex2f(-1.56, -.62);
-    glVertex2f(-1.4, -.62);
-    glVertex2f(-1.4, -.48);
-    glEnd();
-    // door
-    glColor3f(1, 1, 1);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.52, -.50);
-    glVertex2f(-1.52, -.62);
-    glVertex2f(-1.44, -.62);
-    glVertex2f(-1.44, -.50);
-    glEnd();
-
-    glColor3f(0, 0, 0);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.515, -.505);
-    glVertex2f(-1.515, -.62);
-    glVertex2f(-1.445, -.62);
-    glVertex2f(-1.445, -.505);
-    glEnd();
-
-    glTranslatef(-1.515, 0, 0);
-    glColor3ub(177, 107, 58);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.515 + 1.515, -.505);
-    glVertex2f(-1.515 + 1.515, -.62);
-    glVertex2f(-1.445 + 1.515, -.62);
-    glVertex2f(-1.445 + 1.515, -.505);
-    glEnd();
-    glColor3f(1, 1, 1);
-    FilledCircle(-1.455 + 1.515, -.56, .005, 100);
-
-    glTranslatef(1.515, 0, 0);
-    // garage door
-    glColor3f(1, 1, 1);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.75, -.5);
-    glVertex2f(-1.75, -.62);
-    glVertex2f(-1.59, -.62);
-    glVertex2f(-1.59, -.5);
-    glEnd();
-    glColor3ub(87, 62, 58);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.74, -.51);
-    glVertex2f(-1.74, -.62);
-    glVertex2f(-1.6, -.62);
-    glVertex2f(-1.6, -.51);
-    glEnd();
-
-    glColor3ub(87, 62, 58);
-    glBegin(GL_QUADS);
-    glVertex2f(-1.76, -.45);
-    glVertex2f(-1.76, -.46);
-    glVertex2f(-1.42, -.46);
-    glVertex2f(-1.42, -.45);
-    glEnd();
-
-    // window
-    for (int i = 1; i <= 5; i++)
-    {
-        for (int j = 1; j <= 2; j++)
-        {
-            glColor3ub(87, 62, 58);
-            glBegin(GL_QUADS);
-            glVertex2f(-1.72 - .02, -.43);
-            glVertex2f(-1.72 - .02, -.44);
-            glVertex2f(-1.60 - .02, -.44);
-            glVertex2f(-1.60 - .02, -.43);
-            glEnd();
-            windowBack();
-            window();
-
-            glTranslatef(.17, 0, 0);
-        }
-        glTranslatef(-.17 * 2, .15, 0);
-    }
-    Origin();
 }
 // Function to draw large building
 void commonBuilidingLarge()
@@ -1735,7 +1338,6 @@ void car()
 // Function to draw sun
 void sun()
 {
-
     FilledCircle(0, 0.6, .1, 100);
 }
 // Function for defining origin
@@ -1744,7 +1346,6 @@ void Origin()
     glLoadIdentity();
     glOrtho(-1.8, 2, -1, 1, -1, 1);
 }
-
 void morningDisp(int a)
 {
     firstSound = true;
@@ -1769,7 +1370,6 @@ void morningDisp(int a)
     car2PosX2 = 1.6;
     carSpeed = .01;
     cloudScalVal = 0;
-    //    glutDisplayFunc(morning);
 }
 // Function for summer season
 void summer()
@@ -1896,46 +1496,7 @@ void summer()
 
     glTranslatef(-.15, .08, 0);
     glColor3ub(0, 150, 136);
-    demoBuilding();
-    glTranslatef(-.45, -.15, 0);
-    glScalef(.6, .6, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(.7, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(.67, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(248, 153, 203);
-    commercialBuilding();
-    Origin();
 
-    glTranslatef(1.55, .08, 0);
-    glColor3ub(144, 52, 162);
-    demoBuilding();
-
-    glTranslatef(2, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-
-    glTranslatef(2.8, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(3.22, .08, 0);
-    glColor3ub(204, 126, 64);
-    commonBuiliding();
-    Origin();
-
-    glTranslatef(2, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(3.1, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
     Origin();
 
     glTranslatef(-1.65, -.4, 0);
@@ -1964,37 +1525,11 @@ void summer()
     glTranslatef(.42, 0, 0);
     glColor3ub(0, 150, 136);
     commonBuiliding();
-    glTranslatef(2 * .42, 0, 0);
-    glColor3ub(144, 52, 162);
-    commonBuilidingLarge();
     glTranslatef(3 * .42, 0, 0);
     glColor3ub(0, 150, 136);
     shop();
 
     school();
-
-    glTranslatef(-1.9, -.07, 0);
-    float plantX = 0;
-    plant(0);
-    plantX += .43;
-    plant(plantX);
-    plantX += .43;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .42;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    Origin();
 
     glTranslatef(4 * .42, 0, 0);
     setColor(255, 255, 255);
@@ -2007,75 +1542,7 @@ void summer()
     glScalef(.8, .8, 0);
     glTranslatef(5 * .455, -.16, 0);
     setColor(251, 255, 171);
-    commercialBuilding();
-    Origin();
-    if (doorOpen)
-    {
-        glTranslatef(boyPosX + boyPosX2, boyPosY + boyPosY2, 0);
-        glScalef(.08 + schoolBoyScalVal, .08 + schoolBoyScalVal, 1);
-        schoolBoy();
-        Origin();
-    }
-    glTranslatef(peoplePos, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
 
-    Origin();
-    glTranslatef(peoplePos2, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-
-    glTranslatef(peoplePos, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-    glTranslatef(peoplePos2, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glTranslatef(-1.6, 0, 0);
-    for (int i = 0; i < 5; i++)
-    {
-        streetLight();
-        glTranslatef(.8, 0, 0);
-    }
     Origin();
 
     glPushMatrix();
@@ -2162,7 +1629,6 @@ void drawstring(float x, float y, float z, char *msg)
     glRasterPos3f(x, y, z);
     for (int i = 0; i < strlen(msg); i++)
     {
-
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, msg[i]);
     }
 } // Function to display the names in introductory window
@@ -2328,48 +1794,7 @@ void winter()
     glEnd();
     glDisable(GL_LIGHTING);
 
-    glTranslatef(-.15, .08, 0);
-    glColor3ub(0, 150, 136);
-    demoBuilding();
-    glTranslatef(-.45, -.15, 0);
-    glScalef(.6, .6, 1);
-    setColor(255, 250, 250);
-    commercialBuilding();
-    Origin();
-    glTranslatef(.7, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(.67, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(248, 153, 203);
-    commercialBuilding();
-    Origin();
 
-    glTranslatef(1.55, .08, 0);
-    glColor3ub(144, 52, 162);
-    demoBuilding();
-
-    glTranslatef(2, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-
-    glTranslatef(2.8, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(3.22, .08, 0);
-    glColor3ub(204, 126, 64);
-    commonBuiliding();
-    Origin();
-
-    glTranslatef(2, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(3.1, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
     Origin();
 
     glTranslatef(-1.65, -.4, 0);
@@ -2397,37 +1822,11 @@ void winter()
     glTranslatef(.42, 0, 0);
     glColor3ub(0, 150, 136);
     commonBuiliding();
-    glTranslatef(2 * .42, 0, 0);
-    glColor3ub(144, 52, 162);
-    commonBuilidingLarge();
     glTranslatef(3 * .42, 0, 0);
     glColor3ub(0, 150, 136);
     shop();
 
     school();
-
-    glTranslatef(-1.9, -.07, 0);
-    float plantX = 0;
-    plant(0);
-    plantX += .43;
-    plant(plantX);
-    plantX += .43;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .42;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    Origin();
 
     glTranslatef(4 * .42, 0, 0);
     setColor(255, 255, 255);
@@ -2440,77 +1839,9 @@ void winter()
     glScalef(.8, .8, 0);
     glTranslatef(5 * .455, -.16, 0);
     setColor(251, 255, 171);
-    commercialBuilding();
-    Origin();
-    if (doorOpen)
-    {
-        glTranslatef(boyPosX + boyPosX2, boyPosY + boyPosY2, 0);
-        glScalef(.08 + schoolBoyScalVal, .08 + schoolBoyScalVal, 1);
-        schoolBoy();
-        Origin();
-    }
     glTranslatef(peoplePos, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
 
     Origin();
-    glTranslatef(peoplePos2, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-
-    glTranslatef(peoplePos, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-    glTranslatef(peoplePos2, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glTranslatef(-1.6, 0, 0);
-    for (int i = 0; i < 5; i++)
-    {
-        streetLight();
-        glTranslatef(.8, 0, 0);
-    }
-    Origin();
-
     glPushMatrix();
     glTranslatef(carPosX1, 0, 0);
     setColor(137, 0, 3);
@@ -2792,48 +2123,6 @@ void rain()
     glEnd();
     glDisable(GL_LIGHTING);
 
-    glTranslatef(-.15, .08, 0);
-    glColor3ub(0, 150, 136);
-    demoBuilding();
-    glTranslatef(-.45, -.15, 0);
-    glScalef(.6, .6, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(.7, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(.67, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(248, 153, 203);
-    commercialBuilding();
-    Origin();
-
-    glTranslatef(1.55, .08, 0);
-    glColor3ub(144, 52, 162);
-    demoBuilding();
-
-    glTranslatef(2, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-
-    glTranslatef(2.8, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(3.22, .08, 0);
-    glColor3ub(204, 126, 64);
-    commonBuiliding();
-    Origin();
-
-    glTranslatef(2, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(3.1, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
     Origin();
 
     glTranslatef(-1.65, -.4, 0);
@@ -2857,38 +2146,12 @@ void rain()
     building();
     glTranslatef(.42, 0, 0);
     glColor3ub(0, 150, 136);
-    commonBuiliding();
-    glTranslatef(2 * .42, 0, 0);
-    glColor3ub(144, 52, 162);
-    commonBuilidingLarge();
+    commonBuiliding();  //left 2nd common
     glTranslatef(3 * .42, 0, 0);
     glColor3ub(0, 150, 136);
     shop();
 
     school();
-
-    glTranslatef(-1.9, -.07, 0);
-    float plantX = 0;
-    plant(0);
-    plantX += .43;
-    plant(plantX);
-    plantX += .43;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .4;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .42;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    plantX += .52;
-    plant(plantX);
-    plantX += .32;
-    plant(plantX);
-    Origin();
 
     glTranslatef(4 * .42, 0, 0);
     setColor(255, 255, 255);
@@ -2897,80 +2160,6 @@ void rain()
     glTranslatef(.129, .6625, 0);
     glScalef(.25, .25, 0);
     Watch();
-    Origin();
-    glScalef(.8, .8, 0);
-    glTranslatef(5 * .455, -.16, 0);
-    setColor(251, 255, 171);
-    commercialBuilding();
-    Origin();
-    if (doorOpen)
-    {
-        glTranslatef(boyPosX + boyPosX2, boyPosY + boyPosY2, 0);
-        glScalef(.08 + schoolBoyScalVal, .08 + schoolBoyScalVal, 1);
-        schoolBoy();
-        Origin();
-    }
-    glTranslatef(peoplePos, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glTranslatef(peoplePos2, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-
-    glTranslatef(peoplePos, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-    glTranslatef(peoplePos2, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glTranslatef(-1.6, 0, 0);
-    for (int i = 0; i < 5; i++)
-    {
-        streetLight();
-        glTranslatef(.8, 0, 0);
-    }
     Origin();
 
     glPushMatrix();
@@ -3117,7 +2306,6 @@ void autumn()
     Origin();
 
     glColor3f(1.0f, 1.0f, 0.5f);
-
     // sky
     glColor3ub(255, 140, 0);
     glBegin(GL_QUADS);
@@ -3236,50 +2424,6 @@ void autumn()
     glEnd();
     glDisable(GL_LIGHTING);
 
-    glTranslatef(-.15, .08, 0);
-    glColor3ub(0, 150, 136);
-    demoBuilding();
-    glTranslatef(-.45, -.15, 0);
-    glScalef(.6, .6, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(.7, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(.67, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(248, 153, 203);
-    commercialBuilding();
-    Origin();
-
-    glTranslatef(1.55, .08, 0);
-    glColor3ub(144, 52, 162);
-    demoBuilding();
-
-    glTranslatef(2, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-
-    glTranslatef(2.8, .08, 0);
-    glColor3ub(204, 126, 64);
-    demoBuilding();
-    glTranslatef(3.22, .08, 0);
-    glColor3ub(204, 126, 64);
-    commonBuiliding();
-    Origin();
-
-    glTranslatef(2, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-    glTranslatef(3.1, -.1, 0);
-    glScalef(.7, .7, 1);
-    setColor(255, 255, 255);
-    commercialBuilding();
-    Origin();
-
     glTranslatef(-1.65, -.4, 0);
     glScalef(.3, .3, 1);
     grass();
@@ -3301,43 +2445,17 @@ void autumn()
     renderBitmapString(1.5, 0.5, GLUT_BITMAP_TIMES_ROMAN_24, "w- winter season");
     renderBitmapString(1.5, 0.4, GLUT_BITMAP_TIMES_ROMAN_24, "s- summer season");
     renderBitmapString(1.5, 0.3, GLUT_BITMAP_TIMES_ROMAN_24, "r- rainy season");
-    // front
+
+
     building();
     glTranslatef(.42, 0, 0);
     glColor3ub(0, 150, 136);
     commonBuiliding();
-    glTranslatef(2 * .42, 0, 0);
     glColor3ub(144, 52, 162);
-    commonBuilidingLarge();
     glTranslatef(3 * .42, 0, 0);
     glColor3ub(0, 150, 136);
     shop();
-
     school();
-
-    glTranslatef(-1.9, -.07, 0);
-    float plantX = 0;
-    planta(0);
-    plantX += .43;
-    planta(plantX);
-    plantX += .43;
-    planta(plantX);
-    plantX += .4;
-    planta(plantX);
-    plantX += .4;
-    planta(plantX);
-    plantX += .52;
-    planta(plantX);
-    plantX += .42;
-    planta(plantX);
-    plantX += .32;
-    planta(plantX);
-    plantX += .52;
-    planta(plantX);
-    plantX += .32;
-    planta(plantX);
-    Origin();
-
     glTranslatef(4 * .42, 0, 0);
     setColor(255, 255, 255);
     commercialBuilding();
@@ -3346,80 +2464,6 @@ void autumn()
     glScalef(.25, .25, 0);
     Watch();
     Origin();
-    glScalef(.8, .8, 0);
-    glTranslatef(5 * .455, -.16, 0);
-    setColor(251, 255, 171);
-    commercialBuilding();
-    Origin();
-    if (doorOpen)
-    {
-        glTranslatef(boyPosX + boyPosX2, boyPosY + boyPosY2, 0);
-        glScalef(.08 + schoolBoyScalVal, .08 + schoolBoyScalVal, 1);
-        schoolBoy();
-        Origin();
-    }
-    glTranslatef(peoplePos, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-    glTranslatef(peoplePos2, -.62, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-
-    glTranslatef(peoplePos, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glRotatef(180, 0, 1, 0);
-    glTranslatef(peoplePos2, -.61, 0);
-    glScalef(.12, .12, 1);
-    setColor(88, 9, 153);
-    people();
-    glTranslatef(2, 0, 0);
-    setColor(175, 99, 237);
-    people();
-    glTranslatef(6, 0, 0);
-    setColor(146, 7, 9);
-    people();
-
-    Origin();
-
-    glTranslatef(-1.6, 0, 0);
-    for (int i = 0; i < 5; i++)
-    {
-        streetLight();
-        glTranslatef(.8, 0, 0);
-    }
-    Origin();
-
     glPushMatrix();
     glTranslatef(carPosX1, 0, 0);
     setColor(137, 0, 3);
@@ -3499,7 +2543,6 @@ void autumn()
 }
 void idle(int val)
 {
-
     glutPostRedisplay();
     glutTimerFunc(100, idle, 0);
 }
@@ -3534,7 +2577,6 @@ void keys(unsigned char key, int x, int y)
 void anim()
 {
     glutTimerFunc(10, clockAnim, 0);
-    glutTimerFunc(10, legAnim, 0);
     glutTimerFunc(10, cloudAnim, 0);
     glutTimerFunc(10, carAnim, 0);
     glutTimerFunc(10, peopleAnim, 0);
