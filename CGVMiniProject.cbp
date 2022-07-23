@@ -42,9 +42,6 @@
 			<Add library="gdi32" />
 			<Add directory="C:/Program Files/CodeBlocks/MinGW/x86_64-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="CGVMiniProject.cbp" />
-		<Unit filename="CGVMiniProject.depend" />
-		<Unit filename="CGVMiniProject.layout" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

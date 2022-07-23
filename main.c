@@ -10,7 +10,6 @@ typedef enum
 } bool;
 bool first = true;
 int temps = 0;
-
 char s[30];
 int temp = 0;
 bool firstSound = true;
@@ -45,7 +44,7 @@ int gLobal_G = 0;
 int gLobal_B = 0;
 float leftL = 20;
 float rightL = -20;
-float speed = 3 * 6;
+float speed = 0.1*0.1;
 float Rsecond = 0;
 float Rminute = 0;
 float Rhour = 0;
@@ -72,7 +71,6 @@ void init();
 void Origin();
 void building();
 void commonBuiliding();
-//void commonBuilidingLarge();
 void commercialBuilding();
 void demoBuilding();
 void window();
@@ -727,6 +725,135 @@ void commonBuiliding()
     glEnd();
 
     glTranslatef(-1.515, 0, 0);
+    glColor3ub(177, 107, 58);
+
+    glBegin(GL_QUADS);
+    glVertex2f(-1.515 + 1.515, -.505);
+    glVertex2f(-1.515 + 1.515, -.62);
+    glVertex2f(-1.445 + 1.515, -.62);
+    glVertex2f(-1.445 + 1.515, -.505);
+    glEnd();
+    glColor3f(1, 1, 1);
+    FilledCircle(-1.455 + 1.515, -.56, .005, 100);
+
+    glTranslatef(1.515, 0, 0);
+
+    glEnable(GL_LIGHTING);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, doorFront_ambient);
+    glColor3f(1, 1, 1);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.52, -.62);
+    glVertex2f(-1.55, -.64);
+    glVertex2f(-1.41, -.64);
+    glVertex2f(-1.44, -.62);
+    glEnd();
+    glDisable(GL_LIGHTING);
+
+    // garage door
+    glColor3f(1, 1, 1);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.75, -.5);
+    glVertex2f(-1.75, -.62);
+    glVertex2f(-1.59, -.62);
+    glVertex2f(-1.59, -.5);
+    glEnd();
+    glColor3ub(87, 62, 58);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.74, -.51);
+    glVertex2f(-1.74, -.62);
+    glVertex2f(-1.6, -.62);
+    glVertex2f(-1.6, -.51);
+    glEnd();
+    glEnable(GL_LIGHTING);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, doorFront_ambient);
+    glColor3f(1, 1, 1);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.75, -.62);
+    glVertex2f(-1.78, -.64);
+    glVertex2f(-1.56, -.64);
+    glVertex2f(-1.59, -.62);
+    glEnd();
+    glDisable(GL_LIGHTING);
+
+    glColor3ub(87, 62, 58);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.76, -.45);
+    glVertex2f(-1.76, -.46);
+    glVertex2f(-1.42, -.46);
+    glVertex2f(-1.42, -.45);
+    glEnd();
+
+    // window
+    for (int i = 1; i <= 3; i++)
+    {
+        for (int j = 1; j <= 2; j++)
+        {
+            glColor3ub(87, 62, 58);
+            glBegin(GL_QUADS);
+            glVertex2f(-1.72 - .02, -.43);
+            glVertex2f(-1.72 - .02, -.44);
+            glVertex2f(-1.60 - .02, -.44);
+            glVertex2f(-1.60 - .02, -.43);
+            glEnd();
+            windowBack();
+            window();
+            glTranslatef(.17, 0, 0);
+        }
+        glTranslatef(-.17 * 2, .15, 0);
+    }
+    Origin();
+
+
+    glColor3ub(204, 126, 64);
+    glBegin(GL_POLYGON);
+    glVertex2f(-1.79, 0);
+    glVertex2f(-1.79, -.62);
+    glVertex2f(-1.4, -.62);
+    glVertex2f(-1.4, 0);
+    glVertex2f(-1.595, .05);
+    glEnd();
+
+    glColor3f(1, 1, 1);
+    glBegin(GL_POLYGON);
+    glVertex2f(-1.595, .05);
+    glVertex2f(-1.39, -.01);
+    glVertex2f(-1.39, 0);
+    glVertex2f(-1.595, .06);
+    glVertex2f(-1.80, 0);
+    glVertex2f(-1.80, -.010);
+    glEnd();
+
+    FilledCircle(-1.595, -.0, .03, 100);
+    glColor3ub(48, 87, 102);
+    FilledCircle(-1.595, -.0, .025, 100);
+
+    glColor3ub(87, 62, 58);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.56, -.48);
+    glVertex2f(-1.56, -.62);
+    glVertex2f(-1.4, -.62);
+    glVertex2f(-1.4, -.48);
+    glEnd();
+
+    // door
+    glColor3f(1, 1, 1);
+
+    glBegin(GL_QUADS);
+    glVertex2f(-1.52, -.50);
+    glVertex2f(-1.52, -.62);
+    glVertex2f(-1.44, -.62);
+    glVertex2f(-1.44, -.50);
+    glEnd();
+
+    glColor3f(0, 0, 0);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.515, -.505);
+    glVertex2f(-1.515, -.62);
+    glVertex2f(-1.445, -.62);
+    glVertex2f(-1.445, -.505);
+    glEnd();
+
+    glTranslatef(-1.0, 0, 0);//--------------------------------------------------------------------------------
     glColor3ub(177, 107, 58);
 
     glBegin(GL_QUADS);
@@ -1524,6 +1651,10 @@ void summer()
     building();
     glTranslatef(.42, 0, 0);
     glColor3ub(0, 150, 136);
+    building();
+    glTranslatef(.92, 0, 0);
+    glColor3ub(0, 150, 136);
+
     commonBuiliding();
     glTranslatef(3 * .42, 0, 0);
     glColor3ub(0, 150, 136);
@@ -1635,21 +1766,24 @@ void drawstring(float x, float y, float z, char *msg)
 void welcomeDisplay()
 {
     glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    drawstring(750, 1300, 0, "Bangalore Institute of Technology");
-    drawstring(650, 1200, 0, "Department of Computer Science and Engineering");
+    glColor3d(1,1,1);
 
-    drawstring(520, 1100, 0, "Computer Graphics and Visualization Laboratory with Mini Project");
-    drawstring(780, 1000, 0, "Season Change Simulation");
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    drawstring(750, 1500, 0, "Bangalore Institute of Technology");
+    drawstring(650, 1400, 0, "Department of Computer Science and Engineering");
+
+    drawstring(520, 1300, 0, "Computer Graphics and Visualization Laboratory with Mini Project");
+    drawstring(930, 1200, 0, "18CSL67");
+    drawstring(730, 1100, 0, "SEASON CHANGE SIMULATION");
 
     drawstring(1150, 800, 0, "Submitted to:");
-    drawstring(1150, 740, 0, "Prof. N. Thanuja");
+    drawstring(1150, 740, 0, "Prof. Nagamani D. R.");
     drawstring(1150, 680, 0, "Assistant Professor");
     drawstring(1150, 620, 0, "Department of CS&E");
 
     drawstring(520, 800, 0, "Presented by:");
-    drawstring(520, 740, 0, "Prateek Nayak - 1BI19CS109");
-    drawstring(520, 680, 0, "Rakesh S. - 1BI19CS122");
+    drawstring(520, 680, 0, "Prateek Nayak - 1BI19CS109");
+    drawstring(520, 740, 0, "Rakesh S. - 1BI19CS122");
     drawstring(520, 620, 0, "B Section");
 
     drawstring(1800, 550, 0, "NOTE:");
